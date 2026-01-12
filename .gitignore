@@ -1,0 +1,14 @@
+# Entornos virtuales
+venv/
+env/
+.env
+
+# Base de datos local
+*.db
+
+# Python
+__pycache__/
+*.pyc
+
+# Streamlit
+.streamlit/
