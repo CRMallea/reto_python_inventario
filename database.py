@@ -1,20 +1,15 @@
-from sqlalchemy import create_engine, Column, Integer, String, Float, ForeignKey, Boolean
+# REEMPLAZA LA PRIMERA LÍNEA POR ESTA:
+from sqlalchemy import Column, Integer, String, Float, ForeignKey
+# (Eliminamos 'create_all' de aquí porque no existe como importación)
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, relationship
+from sqlalchemy import create_engine
 
-engine = create_engine("sqlite:///./inventario.db", connect_args={"check_same_thread": False})
+DATABASE_URL = "sqlite:///./inventario.db"
+engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
-# Función para que los routers obtengan la conexión
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
-
-# MODELOS DE TABLAS
 class CategoriaDB(Base):
     __tablename__ = "categorias"
     id = Column(Integer, primary_key=True, index=True)
@@ -25,18 +20,21 @@ class ProductoDB(Base):
     __tablename__ = "productos"
     id = Column(Integer, primary_key=True, index=True)
     nombre = Column(String)
+    descripcion = Column(String)
     precio = Column(Float)
     stock = Column(Integer)
-    activo = Column(Boolean, default=True)
     categoria_id = Column(Integer, ForeignKey("categorias.id"))
     categoria = relationship("CategoriaDB", back_populates="productos")
-
-# ... (Tus otros modelos CategoriaDB y ProductoDB se quedan igual)
 
 class UsuarioDB(Base):
     __tablename__ = "usuarios"
     id = Column(Integer, primary_key=True, index=True)
-    username = Column(String, unique=True, index=True)
-    email = Column(String, unique=True)
-    password_hashed = Column(String) # Aquí va la clave encriptada
-    esta_activo = Column(Boolean, default=True)
+    username = Column(String, unique=True)
+    password_hash = Column(String)
+
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()

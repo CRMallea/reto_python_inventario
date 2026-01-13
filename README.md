@@ -1,19 +1,45 @@
-# 📦 Sistema de Gestión de Inventario API + Streamlit
+# 📦 Sistema de Gestión de Inventario (FastAPI + Streamlit)
 
-Este es un sistema full-stack que incluye una **API robusta** con FastAPI y una **interfaz visual** moderna con Streamlit.
+Este proyecto es una solución integral para la gestión de productos y categorías, con un backend robusto en **FastAPI** y una interfaz intuitiva en **Streamlit**.
 
 ## 🚀 Características
-- **Autenticación JWT:** Seguridad profesional con tokens.
-- **Base de Datos:** SQLite gestionado con SQLAlchemy.
-- **Frontend Interactivo:** Visualización de stock y gestión de productos.
-- **Seguridad:** Hashing de contraseñas con bcrypt.
+- **Seguridad**: Autenticación basada en JWT (JSON Web Tokens).
+- **Base de Datos**: Persistencia en SQLite mediante SQLAlchemy.
+- **Frontend**: Panel de control interactivo con visualización de datos en Pandas.
+- **API**: Documentación automática con Swagger UI.
 
-## 🛠️ Instalación
-1. Clona el repositorio.
-2. Instala las dependencias: `pip install -r requirements.txt`.
-3. Crea un archivo `.env` con tu `SECRET_KEY`.
+## 🛠️ Instalación y Configuración
 
-## ⚙️ Ejecución
-Debes abrir dos terminales:
-- **Terminal 1 (Backend):** `uvicorn main:app --reload`
-- **Terminal 2 (Frontend):** `streamlit run app_visual.py`
+1. **Clonar o descargar el proyecto** en una carpeta.
+2. **Instalar dependencias**:
+
+pip install -r requirements.txt
+
+Inicializar la Base de Datos (Crea el usuario admin y categorías iniciales):
+
+Bash
+
+python init_db.py
+🏃 Ejecución
+Debes abrir dos terminales diferentes:
+
+Terminal 1: Backend (API)
+
+
+uvicorn main:app --reload
+
+
+La API estará disponible en: https://www.google.com/search?q=http://127.0.0.1:8000 Documentación interactiva: https://www.google.com/search?q=http://127.0.0.1:8000/docs
+
+Terminal 2: Frontend (Streamlit)
+
+
+streamlit run app_visual.py
+
+
+🔐 Credenciales por defecto
+
+Usuario: admin
+Contraseña: admin123
+
+
