@@ -1,6 +1,4 @@
-# REEMPLAZA LA PRIMERA LÍNEA POR ESTA:
 from sqlalchemy import Column, Integer, String, Float, ForeignKey
-# (Eliminamos 'create_all' de aquí porque no existe como importación)
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, relationship
 from sqlalchemy import create_engine

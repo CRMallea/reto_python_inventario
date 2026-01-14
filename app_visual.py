@@ -23,7 +23,6 @@ if st.session_state.token is None:
         
         if st.button("Entrar", use_container_width=True):
             try:
-                # URL actualizada a /usuarios/token según tu estructura
                 resp = requests.post(
                     f"{API_URL}/usuarios/token", 
                     data={"username": user, "password": password}
@@ -39,7 +38,6 @@ if st.session_state.token is None:
 
 # 2. VISTA DASHBOARD (SOLO SI ESTÁ AUTENTICADO)
 else:
-    # DEFINICIÓN GLOBAL DE HEADERS (Evita el error 'headers is not defined')
     headers = {"Authorization": f"Bearer {st.session_state.token}"}
 
     with st.sidebar:

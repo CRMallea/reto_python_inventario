@@ -13,7 +13,7 @@ def inicializar():
     if not user_exists:
         admin_user = database.UsuarioDB(
             username="admin",
-            password_hash=auth.obtener_password_hash("admin123") # Cambia la clave aquí
+            password_hash=auth.obtener_password_hash("admin123") # Cambia la clave aqui
         )
         db.add(admin_user)
         print("✅ Usuario 'admin' creado con éxito.")
