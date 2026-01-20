@@ -10,7 +10,7 @@ ALGORITHM = "HS256"
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="usuarios/token")
 
-def obtener_password_hash(password):
+def get_password_hash(password):
     return pwd_context.hash(password)
 
 def verificar_password(plain, hashed):

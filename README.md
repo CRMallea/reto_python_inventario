@@ -7,6 +7,12 @@ Este proyecto es una solución integral para la gestión de productos y categor�
 - **Base de Datos**: Persistencia en SQLite mediante SQLAlchemy.
 - **Frontend**: Panel de control interactivo con visualización de datos en Pandas.
 - **API**: Documentación automática con Swagger UI.
+Módulos de Análisis Logístico
+El sistema implementa lógica de negocio avanzada para el área de suministros:
+1. Control de Reposición (Reorder Point)El sistema audita automáticamente cada producto y asigna un estado:
+REPOSICIÓN:(rojo) Productos con stock  menor a 5 unidades. 
+OK:(verde) Stock saludable para la operación.
+2. Visualización de Inversión: A través de gráficos dinámicos en Plotly, se puede identificar rápidamente qué productos representan la mayor inversión de capital inmovilizado
 
 ## 🛠️ Instalación y Configuración
 

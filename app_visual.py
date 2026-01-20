@@ -1,6 +1,7 @@
 import streamlit as st
 import requests
 import pandas as pd
+import plotly.express as px
 
 # --- CONFIGURACIÓN ---
 API_URL = "http://127.0.0.1:8000"
@@ -54,12 +55,14 @@ else:
             productos = res.json()
             if productos:
                 df = pd.DataFrame(productos)
+                df['Estado'] = df['stock'].apply(lambda x: "⚠️ REPOSICIÓN" if x <= 5 else "✅ OK")
+                def color_estado(val):
+                    color = '#ff4b4b' if val == "⚠️ REPOSICIÓN" else '#2eb82e'
+                    return f'color: {color}; font-weight: bold'
+                columnas_ver= ["nombre", "precio", "stock", "descripcion", "Estado"]
+                st.subheader("Detalle de Existencias")
                 
-                # Manejo seguro de columnas para evitar "['descripcion'] not in index"
-                columnas_posibles = ["nombre", "precio", "stock", "descripcion"]
-                columnas_a_mostrar = [c for c in columnas_posibles if c in df.columns]
-                
-                st.dataframe(df[columnas_a_mostrar], use_container_width=True)
+                st.dataframe(df[columnas_ver].style.applymap(color_estado, subset=['Estado']), use_container_width=True)
             else:
                 st.info("No hay productos registrados todavía.")
         elif res.status_code == 401:
@@ -67,6 +70,26 @@ else:
     except Exception as e:
         st.error(f"Error al cargar la lista: {e}")
 
+    st.divider()
+    
+    st.subheader("📊 Análisis Visual de Inventario")
+
+    if not df.empty:
+    
+        df['color_grafico'] = df['stock'].apply(lambda x: 'Riesgo Crítico' if x <= 5 else 'Stock Saludable')
+    
+  
+    fig = px.bar(
+        df, 
+        x='nombre', 
+        y='stock',
+        color='color_grafico',
+        color_discrete_map={'Riesgo Crítico': '#ef553b', 'Stock Saludable': '#00cc96'},
+        labels={'nombre': 'Producto', 'stock': 'Cantidad en Almacén', 'color_grafico': 'Estado'},
+        title="Niveles de Stock por Producto"
+    )
+
+    st.plotly_chart(fig, use_container_width=True)
     st.divider()
 
     # --- SECCIÓN: AÑADIR PRODUCTO ---
@@ -97,7 +120,6 @@ else:
                 "categoria_id": cat_id
             }
             try:
-                # Usamos los 'headers' definidos al inicio del bloque else
                 r = requests.post(f"{API_URL}/productos/", json=payload, headers=headers)
                 
                 if r.status_code in [200, 201]:

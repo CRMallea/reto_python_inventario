@@ -27,7 +27,7 @@ class ProductoDB(Base):
 class UsuarioDB(Base):
     __tablename__ = "usuarios"
     id = Column(Integer, primary_key=True, index=True)
-    username = Column(String, unique=True)
+    username = Column(String, unique=True, index=True)
     password_hash = Column(String)
 
 def get_db():
